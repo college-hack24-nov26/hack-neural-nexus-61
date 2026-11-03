@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Agriculture - SIH Prototype</title>
+<style>
+:root{--green:#1b5e20;--light:#e8f5e9;--bg:#f6f8f3;--card:#ffffff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Inter,sans-serif}
+body{background:var(--bg);display:flex;min-height:100vh}
+.left{flex:1;background:linear-gradient(160deg,#0a1f0b 0%,#1b5e20 100%);color:white;padding:40px 30px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.left::after{content:'🌿';position:absolute;font-size:200px;opacity:0.08;right:-20px;bottom:-20px}
+.badge{display:inline-block;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);padding:6px 12px;border-radius:20px;font-size:11px;letter-spacing:1px;margin-bottom:20px}
+.left h1{font-size:42px;line-height:1.05;font-weight:800}
+.left h1 span{color:#a5d6a7}
+.left p.desc{color:#c8e6c9;margin:16px 0 28px 0;line-height:1.5;font-size:15px}
+.features{display:flex;gap:16px;margin-top:10px}
+.feat{background:rgba(255,255,255,0.08);backdrop-filter:blur(8px);border-radius:14px;padding:12px 14px;flex:1}
+.feat b{display:block;font-size:14px}.feat span{font-size:11px;color:#a5d6a7}
+.bottom-icons{margin-top:30px;display:flex;gap:20px;font-size:13px;color:#a5d6a7}
+
+.right{flex:1;background:var(--card);padding:30px 24px;display:flex;flex-direction:column;justify-content:center;max-width:480px}
+.right h2{font-size:28px}
+.right .sub{color:#666;font-size:14px;margin:6px 0 18px 0}
+label{font-size:13px;font-weight:600;margin:12px 0 6px 0;display:block}
+.input-wrap{position:relative}
+.input{width:100%;padding:13px 14px;border:1px solid #dde6dc;border-radius:12px;background:#fbfcfb;font-size:14px;outline:none}
+.input:focus{border-color:var(--green);background:white}
+.eye{position:absolute;right:12px;top:11px;cursor:pointer;background:#f1f8e9;border:1px solid #dde6dc;border-radius:8px;padding:4px 8px}
+.row{display:flex;justify-content:space-between;align-items:center;margin:14px 0}
+.check{font-size:13px;color:#555}
+.link{color:var(--green);text-decoration:none;font-weight:600;font-size:13px}
+.btn{width:100%;padding:14px;border:none;border-radius:12px;font-weight:700;font-size:15px;cursor:pointer;margin-top:6px}
+.btn-green{background:var(--green);color:white}
+.btn-demo{background:#f1f8e9;color:var(--green);border:1px solid #c8e6c9;display:flex;justify-content:center;gap:8px}
+.divider{text-align:center;color:#999;font-size:12px;margin:18px 0}
+.demo-box{background:#f9fbe7;border:1px dashed #c5e1a5;border-radius:12px;padding:12px;font-size:12px;line-height:1.5}
+.notice{background:#fff3e0;border-left:4px solid #ff9800;padding:10px 12px;border-radius:10px;margin-top:16px;font-size:12px;display:flex;justify-content:space-between;align-items:center}
+@media(max-width:800px){body{flex-direction:column}.left{padding:24px 20px}.left h1{font-size:32px}.right{max-width:100%}}
+</style>
+</head>
+<body>
+
+<div class="left">
+  <div class="badge">SMART AGRICULTURE · SIH PROTOTYPE</div>
+  <h1>See the field.<br>Protect the<br><span>harvest.</span></h1>
+  <p class="desc">AI-assisted crop monitoring that turns field signals into simple, timely decisions for every farmer.</p>
+  
+  <div class="features">
+    <div class="feat"><b>24/7</b><span>Field watch</span></div>
+    <div class="feat"><b>AI</b><span>Leaf insights</span></div>
+    <div class="feat"><b>IoT</b><span>Live sensors</span></div>
+  </div>
+  
+  <div class="bottom-icons">
+    <div>🌱 Soil</div>
+    <div>🍅 Crop health</div>
+    <div>🌿</div>
+  </div>
+</div>
+
+<div class="right">
+  <h2>Smart Agriculture</h2>
+  <p class="sub">Sign in to view your farm</p>
+
+  <label>Email or Mobile Number</label>
+  <input class="input" id="email" placeholder="you@example.com or 9876543210" value="farmer@demo.com">
+
+  <label>Password</label>
+  <div class="input-wrap">
+    <input class="input" id="pass" type="password" value="farmer123">
+    <span class="eye" onclick="togglePass()">👁️</span>
+  </div>
+
+  <div class="row">
+    <label class="check"><input type="checkbox"> Remember me</label>
+    <a class="link" href="#">Forgot password?</a>
+  </div>
+
+  <button class="btn btn-green" onclick="login()">Sign In</button>
+  <button class="btn btn-demo" onclick="demoLogin()">🚜 Try Demo Login</button>
+
+  <div class="divider">New to Smart Agriculture? <a class="link" href="#">Create an account</a></div>
+
+  <div class="demo-box">
+    <b>Demo accounts</b><br>
+    Farmer → farmer@demo.com / farmer123<br>
+    Officer → officer@demo.com / officer123<br>
+    Or just tap "Try Demo Login" above — any credentials work in demo mode.
+  </div>
+
+  <div class="notice" id="notice">
+    <span>💡 Demo mode active. All logins are accepted.</span>
+    <button style="border:1px solid #ccc;background:white;padding:6px 12px;border-radius:8px;cursor:pointer" onclick="document.getElementById('notice').style.display='none'">Got it</button>
+  </div>
+</div>
+
+<script>
+function togglePass(){
+  let p=document.getElementById('pass');
+  p.type=p.type==='password'?'text':'password';
+}
+function login(){
+  let e=document.getElementById('email').value;
+  let p=document.getElementById('pass').value;
+  if(!e||!p){alert('Enter email and password');return;}
+  alert('✅ Logged in as '+e+'\nRedirecting to dashboard...');
+  // window.location.href='dashboard.html';
+}
+function demoLogin(){
+  document.getElementById('email').value='farmer@demo.com';
+  document.getElementById('pass').value='farmer123';
+  login();
+}
+</script>
+</body>
+</html>

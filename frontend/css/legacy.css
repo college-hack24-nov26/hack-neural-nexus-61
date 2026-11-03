@@ -1,0 +1,46 @@
+/* Smart Agriculture legacy mode: intentionally plain and light for older smartphones. */
+html, body { margin: 0; padding: 0; background: #f3f6f1; color: #1e2b22; font: 16px Arial, Helvetica, sans-serif; }
+* { box-sizing: border-box; }
+body { min-width: 280px; }
+a { color: #1d6230; }
+button, input, select, textarea { font: 16px Arial, Helvetica, sans-serif; }
+button, .btn, a { min-height: 42px; }
+.app-shell, .main { display: block; width: 100%; min-height: 0; }
+.app-sidebar { position: static; width: 100%; min-height: 0; padding: 10px; background: #193a21; color: #fff; }
+.app-sidebar-brand { display: block; padding: 5px 4px 12px; color: #fff; text-decoration: none; }
+.app-sidebar-brand small { display: block; color: #c9e4c9; margin-top: 3px; }
+.app-sidebar-nav { display: block; margin: 0; padding: 0; }
+.app-sidebar-nav a, .app-sidebar-settings { display: inline-block; margin: 2px 2px 2px 0; padding: 8px 9px; border: 1px solid #52795a; border-radius: 4px; color: #fff; text-decoration: none; background: #285b31; }
+.app-sidebar-account { margin: 8px 0; padding: 8px; border-top: 1px solid #52795a; color: #e7f2e3; }
+.app-sidebar-account a { color: #fff; }
+.sidebar-overlay, .menu-toggle, .hero-glow, .hero-grid-lines, .main:before, .main:after, .leaf-ambient, .scan-beam, .live-monitor { display: none !important; }
+.topbar, .reference-topbar { position: static; display: block; min-height: 0; padding: 10px; border-bottom: 1px solid #c8d6c8; background: #fff; }
+.reference-actions { display: block; margin-top: 6px; }
+.field-chip, .icon-btn-wrap, .profile-btn { display: inline-block; margin: 3px 3px 3px 0; }
+.content, .dashboard-page .content, body.reference-page .content { width: 100%; max-width: none; padding: 12px; margin: 0; }
+.reference-heading, .section-intro { display: block; min-height: 0; padding: 12px 0; }
+.reference-heading h1, .reference-heading p, .section-intro h2 { margin: 5px 0; }
+.hero-overview, .quick-stat, .meter-card, .glass-card, .card, .chart-card, .state-box { display: block; width: 100%; margin: 0 0 12px; padding: 12px; border: 1px solid #c8d6c8; border-radius: 5px; background: #fff; box-shadow: none; }
+.hero-overview { background: #e7f1e4; }
+.hero-copy h2 { font-size: 1.55rem; }
+.hero-quick-grid, .meter-grid, .lower-grid, .grid, .weather-grid, .summary-list, .dashboard-grid { display: block; width: 100%; }
+.hero-quick-grid > *, .meter-grid > *, .lower-grid > *, .grid > *, .weather-grid > *, .dashboard-grid > * { display: block; width: 100%; margin: 0 0 10px; }
+.meter-body { display: block; }
+.meter-ring { margin: 0 auto 10px; }
+.dropdown-panel { position: absolute; z-index: 10; max-width: 90%; background: #fff; color: #1e2b22; border: 1px solid #aebfaf; box-shadow: 2px 2px 6px #999; }
+input, select, textarea { width: 100%; max-width: 100%; min-height: 42px; padding: 8px; border: 1px solid #9cad9e; border-radius: 3px; background: #fff; color: #1e2b22; }
+.btn { display: inline-block; padding: 9px 13px; border: 1px solid #1c5d2c; border-radius: 4px; background: #2d7a3d; color: #fff; text-decoration: none; cursor: pointer; }
+.btn-secondary { background: #fff; color: #245b30; }
+.btn-block { width: 100%; }
+img { max-width: 100%; height: auto; }
+svg { max-width: 100%; }
+canvas { display: none !important; }
+.chart-fallback-message { display: block; color: #455b49; font-size: 14px; line-height: 1.4; }
+.state-box { text-align: center; }
+.app-footer { padding: 18px 12px; color: #536756; }
+.modal-overlay { background: #000; background: rgba(0,0,0,.5); }
+.modal-box { width: 92%; max-width: 420px; margin: 10% auto; padding: 15px; background: #fff; color: #1e2b22; border: 1px solid #9cad9e; }
+/* Hide decorative-only blocks, keeping content and controls. */
+.decorative, [aria-hidden="true"] { 
+    display: none !important;
+}

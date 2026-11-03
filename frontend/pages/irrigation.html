@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Irrigation - Smart Agriculture</title>
+<style>
+:root{--green:#2e7d32;--blue:#0288d1;--bg:#f5f7f2;--card:#fff}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:var(--bg)}
+.navbar{background:var(--card);padding:12px 16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;border-bottom:1px solid #e0e6dc}
+.logo b{color:var(--green)}
+.nav-links{width:100%;margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.nav-links a{text-decoration:none;color:#2c3e2c;background:#e8f5e9;padding:6px 12px;border-radius:20px;font-size:13px}
+.nav-links a:nth-child(3){background:var(--green);color:white}
+.top{padding:14px 16px}
+.top h3{font-size:16px}
+.card{background:var(--card);margin:0 12px 14px 12px;border-radius:18px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.row{display:flex;gap:12px}
+.stat{flex:1;background:#f1f8e9;border-radius:14px;padding:14px;text-align:center}
+.stat b{font-size:22px;display:block;color:var(--green)}
+.stat span{font-size:12px;color:#666}
+.stat.blue{background:#e1f5fe} .stat.blue b{color:var(--blue)}
+.switch{width:52px;height:28px;background:#ccc;border-radius:20px;position:relative;cursor:pointer;transition:0.3s}
+.switch.on{background:var(--green)}
+.knob{width:22px;height:22px;background:white;border-radius:50%;position:absolute;top:3px;left:3px;transition:0.3s}
+.switch.on .knob{left:27px}
+.btn{width:100%;background:var(--blue);color:white;border:none;padding:14px;border-radius:12px;font-weight:600;margin-top:10px}
+.log{font-size:12px;color:#666;margin-top:8px;background:#fafafa;padding:10px;border-radius:10px}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">🌱 <b>Smart Agriculture</b> Farm Monitor</div>
+  <div class="nav-links">
+    <a>📊 Dashboard</a>
+    <a>📷 Disease Detection</a>
+    <a>💧 Smart Irrigation</a>
+    <a>🍅 Crop Health</a>
+    <a>📈 Analytics</a>
+  </div>
+</div>
+
+<div class="top">
+  <h3>Live Monitoring FIELD_001 · Tomato Crop</h3>
+  <p style="font-size:13px">Logged in as <b>Farmer</b> · 🔔 No new notifications</p>
+</div>
+
+<div class="card">
+  <h3 style="margin-bottom:12px">💧 Irrigation Status</h3>
+  <div class="row">
+    <div class="stat">
+      <b id="moisture">42%</b>
+      <span>Soil Moisture</span>
+    </div>
+    <div class="stat blue">
+      <b id="temp">27°C</b>
+      <span>Soil Temp</span>
+    </div>
+    <div class="stat">
+      <b id="water">128L</b>
+      <span>Today Used</span>
+    </div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:18px">
+    <div>
+      <b>Auto Irrigation</b><br><span style="font-size:12px;color:#666">Turns on when moisture < 30%</span>
+    </div>
+    <div class="switch on" id="autoSwitch" onclick="toggleAuto()"><div class="knob"></div></div>
+  </div>
+
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-top:16px">
+    <div>
+      <b>Water Pump</b><br><span id="pumpStatus" style="font-size:12px;color:#2e7d32">● OFF - Soil is OK</span>
+    </div>
+    <div class="switch" id="pumpSwitch" onclick="togglePump()"><div class="knob"></div></div>
+  </div>
+
+  <button class="btn" onclick="irrigateNow()">💧 Irrigate Now (30 sec)</button>
+  <div class="log" id="log">System: Smart Agriculture - Connected<br>Last irrigation: Today 5:10 AM - 20L</div>
+</div>
+
+<div class="card">
+  <h4>📈 Moisture History</h4>
+  <canvas id="chart" height="120"></canvas>
+</div>
+
+<script>
+// Simulated sensor data - replace with real API
+let moisture=42, isAuto=true, pumpOn=false;
+
+function updateUI(){
+  document.getElementById('moisture').textContent=moisture+'%';
+  if(moisture<30 && isAuto && !pumpOn){ togglePump(true); }
+  if(moisture>60 && pumpOn){ togglePump(false); }
+}
+
+function toggleAuto(){
+  isAuto=!isAuto;
+  document.getElementById('autoSwitch').classList.toggle('on', isAuto);
+  log(`Auto irrigation ${isAuto?'ENABLED':'DISABLED'}`);
+}
+
+function togglePump(force){
+  if(typeof force==='boolean') pumpOn=force; else pumpOn=!pumpOn;
+  document.getElementById('pumpSwitch').classList.toggle('on', pumpOn);
+  document.getElementById('pumpStatus').innerHTML = pumpOn ? 
+    '<span style="color:#0288d1">● ON - Irrigating...</span>' : 
+    '<span style="color:#2e7d32">● OFF - Soil is OK</span>';
+  if(pumpOn){ moisture+=2; log('Pump STARTED - Watering field...'); }
+  else{ log('Pump STOPPED'); }
+}
+
+function irrigateNow(){
+  togglePump(true);
+  log('Manual irrigation for 30 sec started');
+  setTimeout(()=>togglePump(false), 3000);
+}
+
+function log(msg){
+  const el=document.getElementById('log');
+  el.innerHTML = new Date().toLocaleTimeString() + ' - ' + msg + '<br>' + el.innerHTML;
+}
+
+// Fake sensor fluctuation
+setInterval(()=>{
+  if(!pumpOn) moisture = Math.max(15, moisture + (Math.random()-0.5));
+  else moisture = Math.min(85, moisture + 1.5);
+  updateUI();
+}, 2000);
+
+// Simple chart
+const c=document.getElementById('chart').getContext('2d');
+let data=[40,42,38,35,42,45,42];
+setInterval(()=>{
+  data.shift(); data.push(moisture);
+  c.clearRect(0,0,300,120);
+  c.beginPath(); c.strokeStyle='#2e7d32'; c.lineWidth=2;
+  data.forEach((v,i)=>{ let x=i*40, y=100-v; if(i==0) c.moveTo(x,y); else c.lineTo(x,y); });
+  c.stroke();
+},1000);
+
+// === FOR REAL HARDWARE (ESP32) ===
+// Replace above with:
+// async function fetchStatus(){
+//   let res = await fetch('http://YOUR_ESP_IP/status');
+//   let j = await res.json(); // {moisture, temp, pump}
+//   moisture=j.moisture; updateUI();
+// }
+// setInterval(fetchStatus, 3000);
+</script>
+</body>
+</html>

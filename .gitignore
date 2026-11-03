@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Node.js
+node_modules/
+dist/
+
+# Machine Learning models
+*.pth
+*.pt
+*.onnx
+
+# Datasets
+ml/datasets/
+
+# Databases
+*.db
+*.sqlite3
+
+# IDE
+.vscode/
+
+# Operating System
+.DS_Store
+Thumbs.db

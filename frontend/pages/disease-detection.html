@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Agriculture - Farm Monitor</title>
+<style>
+:root{--green:#2e7d32;--light:#e8f5e9;--bg:#f5f7f2;--card:#ffffff;--text:#1b2a1b}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:var(--text)}
+.navbar{background:var(--card);padding:12px 16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;border-bottom:1px solid #e0e6dc;position:sticky;top:0;z-index:10}
+.logo{font-size:18px} .logo b{color:var(--green)}
+.nav-links{width:100%;margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.nav-links a{text-decoration:none;color:#2c3e2c;background:var(--light);padding:6px 12px;border-radius:20px;font-size:14px;font-weight:500}
+.nav-links a.active{background:var(--green);color:white}
+.top{padding:16px}
+.badge{display:inline-flex;gap:6px;align-items:center;background:#fff3e0;color:#e65100;padding:6px 10px;border-radius:20px;font-size:12px;margin-bottom:10px}
+.card{background:var(--card);margin:0 12px 16px 12px;border-radius:18px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.card h2{font-size:18px;margin-bottom:4px}
+.card .sub{font-size:12px;color:#777;margin-bottom:12px}
+.drop{border:2px dashed #a5d6a7;background:#f1f8e9;border-radius:14px;padding:24px 12px;text-align:center;cursor:pointer}
+.drop b{display:block;margin:8px 0;font-size:15px}
+.drop span{font-size:12px;color:#666}
+#preview{width:100%;max-height:240px;object-fit:contain;margin-top:12px;border-radius:10px;display:none}
+.steps{display:flex;gap:18px;margin:18px 0;color:#aaa;font-size:14px}
+.steps .active{color:var(--green);font-weight:700}
+.btn{width:100%;background:var(--green);color:white;border:none;padding:14px;border-radius:12px;font-size:16px;font-weight:600}
+.btn:disabled{background:#ccc}
+.filename{text-align:center;margin-top:10px;font-size:12px;color:#888}
+.result{min-height:80px}
+.empty{background:#f9fbe7;border:1px dashed #c5e1a5;padding:14px;border-radius:10px;color:#666}
+.tag{display:inline-block;background:var(--light);padding:4px 10px;border-radius:20px;font-size:12px;color:var(--green);margin-top:8px}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">🌱 <b>Smart Agriculture</b> Farm Monitor</div>
+  <div class="nav-links">
+    <a class="active">📊 Dashboard</a>
+    <a>📷 Disease Detection</a>
+    <a>💧 Smart Irrigation</a>
+    <a>🍅 Crop Health</a>
+    <a>📈 Analytics</a>
+  </div>
+</div>
+
+<div class="top">
+  <p>Logged in as <b>Farmer</b> · <a href="#">Log out</a> · <a href="#">⚙️ Settings</a></p>
+  <h3 style="margin-top:10px">Live Monitoring FIELD_001 · Tomato Crop</h3>
+  <p>🔔 Notifications - No new notifications</p>
+</div>
+
+<div class="badge">⚠️ DEMO MODE This is a simulated AI response. Connect a real model via <code>detectDisease() in api.js</code></div>
+
+<div class="card">
+  <h2>Upload a Crop / Leaf Photo</h2>
+  <p class="sub">JPEG, PNG or WEBP · up to 8MB</p>
+  
+  <div class="drop" id="dropZone">
+    <div>📷</div>
+    <b>Drag & drop an image here, or click to browse</b>
+    <span>Preview of the uploaded leaf photo</span>
+    <input type="file" id="fileInput" accept="image/*" hidden>
+    <img id="preview">
+  </div>
+
+  <div class="steps">
+    <div id="s1" class="active">01 Capture</div>
+    <div id="s2">02 Analyze</div>
+    <div id="s3">03 Recommend</div>
+  </div>
+
+  <button class="btn" id="analyzeBtn" disabled>✦ Analyze Image</button>
+  <div class="filename" id="fileName">LEAF IMAGE - Awaiting leaf image</div>
+</div>
+
+<div class="card result">
+  <h2>Result</h2>
+  <div id="result">
+    <div class="empty">🌿 Upload a leaf photo to see the diagnosis here.<br>Smart Agriculture</div>
+  </div>
+</div>
+
+<script>
+// === api.js - CHANGE THIS TO YOUR REAL MODEL ===
+async function detectDisease(file){
+  await new Promise(r=>setTimeout(r,1800));
+  const samples=[
+    {name:"Tomato Early Blight",conf:"92.3%",type:"disease",cure:"Remove affected leaves. Spray Mancozeb 2g/L. Avoid overhead watering."},
+    {name:"Healthy Leaf",conf:"98.1%",type:"healthy",cure:"Crop is healthy! Maintain regular irrigation and monitoring."},
+    {name:"Leaf Curl Virus",conf:"87.5%",type:"disease",cure:"Control whiteflies with Neem oil. Remove severely infected plants."}
+  ];
+  return samples[Math.floor(Math.random()*samples.length)];
+}
+
+// === script.js ===
+const dropZone=document.getElementById('dropZone');
+const fileInput=document.getElementById('fileInput');
+const preview=document.getElementById('preview');
+const btn=document.getElementById('analyzeBtn');
+const result=document.getElementById('result');
+const fileName=document.getElementById('fileName');
+let file=null;
+
+dropZone.onclick=()=>fileInput.click();
+dropZone.ondragover=e=>{e.preventDefault();dropZone.style.borderColor='#2e7d32'};
+dropZone.ondrop=e=>{e.preventDefault();handle(e.dataTransfer.files[0])};
+fileInput.onchange=()=>handle(fileInput.files[0]);
+
+function handle(f){
+  if(!f) return;
+  file=f;
+  fileName.textContent="LEAF IMAGE - "+f.name;
+  preview.src=URL.createObjectURL(f);
+  preview.style.display='block';
+  btn.disabled=false;
+  document.getElementById('s1').classList.add('active');
+}
+
+btn.onclick=async()=>{
+  btn.textContent='Analyzing...';
+  btn.disabled=true;
+  document.getElementById('s2').classList.add('active');
+  result.innerHTML='<div class="empty">🔍 Analyzing with AI...</div>';
+  
+  const r=await detectDisease(file);
+  
+  document.getElementById('s3').classList.add('active');
+  result.innerHTML=`
+    <div style="border-left:4px solid ${r.type=='healthy'?'#2e7d32':'#ff9800'};background:${r.type=='healthy'?'#e8f5e9':'#fff3e0'};padding:14px;border-radius:10px">
+      <b>${r.name}</b> <span class="tag">${r.conf}</span>
+      <p style="margin-top:8px;font-size:14px"><b>Recommendation:</b> ${r.cure}</p>
+    </div>
+  `;
+  btn.textContent='✦ Analyze Image';
+  btn.disabled=false;
+}
+</script>
+</body>
+</html>

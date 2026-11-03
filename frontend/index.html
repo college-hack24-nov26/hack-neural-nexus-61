@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KisanRakshak - Smart Agriculture</title>
+<style>
+:root{--green:#2e7d32;--dark:#0f2810;--bg:#f5f7f2;--card:#fff;--blue:#1976d2}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:var(--bg)}
+.page{display:none}.page.active{display:block}
+
+/* LANDING PAGE - Your Screenshot */
+#landing{background:linear-gradient(180deg,#0f2810,#1e4d22);min-height:100vh;color:white;text-align:center;padding:20px}
+#landing .logo{font-size:48px;margin-top:10px}
+#landing h1{font-size:36px;margin-top:10px}
+#landing .sub{color:#c8e6c9;margin:10px 0 30px 0}
+.role-card{background:rgba(255,255,255,0.08);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,0.15);border-radius:24px;padding:28px;margin:14px 10px}
+.role-card .emoji{font-size:64px}
+.role-card h2{margin:14px 0 8px 0}
+.role-card p{color:#a5d6a7;font-size:14px;line-height:1.4}
+.btn{border:none;border-radius:14px;padding:14px 28px;font-weight:700;font-size:15px;cursor:pointer;margin-top:18px}
+.btn-green{background:#4caf50;color:white}
+.btn-blue{background:#1976d2;color:white}
+.footer{margin-top:30px;color:#789784;font-size:12px}
+
+/* NAV */
+.navbar{background:var(--card);padding:12px 16px;display:flex;flex-wrap:wrap;justify-content:space-between;border-bottom:1px solid #e6ece3;position:sticky;top:0;z-index:10}
+.nav-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;width:100%}
+.nav-links a{padding:6px 12px;background:#e8f5e9;border-radius:20px;font-size:13px;text-decoration:none;color:#2e4a2e;cursor:pointer}
+.nav-links a.active{background:var(--green);color:white}
+.card{background:var(--card);margin:12px;border-radius:18px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.input, .select{width:100%;padding:12px;border:1px solid #e0e6dc;border-radius:12px;margin-top:4px}
+.drop{border:2px dashed #a5d6a7;background:#f1f8e9;border-radius:14px;padding:24px;text-align:center;cursor:pointer}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sensor{border:1px solid #e6ece3;border-radius:14px;padding:12px;text-align:center}
+.badge{background:#e8f5e9;color:var(--green);padding:6px 12px;border-radius:20px;font-size:12px}
+.switch{width:46px;height:26px;background:#ccc;border-radius:20px;position:relative;cursor:pointer}
+.switch.on{background:var(--green)} .knob{width:20px;height:20px;background:white;border-radius:50%;position:absolute;top:3px;left:3px;transition:.3s} .switch.on .knob{left:23px}
+</style>
+</head>
+<body>
+
+<!-- PAGE 1: LANDING - Your 2 screenshots -->
+<div id="landing" class="page active">
+  <div class="logo">🌱</div>
+  <h1>KisanRakshak</h1>
+  <p class="sub">AI-powered crop health and smart<br>agriculture platform</p>
+  
+  <div class="role-card">
+    <div class="emoji">🧑‍🌾</div>
+    <h2>Farmer</h2>
+    <p>Monitor your crops, soil, irrigation, weather and disease detection.</p>
+    <button class="btn btn-green" onclick="showPage('farmer-login')">Farmer Login</button>
+  </div>
+  
+  <div class="role-card">
+    <div class="emoji">🛡️</div>
+    <h2>Administrator</h2>
+    <p>Manage farmers, devices, alerts, monitoring data and system operations.</p>
+    <button class="btn btn-blue" onclick="showPage('admin-login')">Admin Login</button>
+  </div>
+  
+  <div class="footer">© 2026 KisanRakshak · Smart Agriculture</div>
+</div>
+
+<!-- PAGE 2: FARMER LOGIN -->
+<div id="farmer-login" class="page">
+  <div style="background:var(--dark);color:white;padding:30px 20px;text-align:center"><h2>🌱 Farmer Login</h2></div>
+  <div class="card">
+    <label>Mobile Number</label><input class="input" placeholder="+91 98XXXX XXXXX" value="98XXXX XXXXX">
+    <label style="margin-top:12px;display:block">Password</label><input class="input" type="password" value="123456">
+    <button class="btn btn-green" style="width:100%;margin-top:16px" onclick="showPage('dashboard')">Login as Farmer</button>
+    <p style="text-align:center;margin-top:12px"><a href="#" onclick="showPage('landing')">← Back</a></p>
+  </div>
+</div>
+
+<!-- PAGE 3: DASHBOARD - Your 5:57 screenshot -->
+<div id="dashboard" class="page">
+  <div class="navbar">
+    <div>🌱 <b>Smart Agriculture</b> Farm Monitor</div>
+    <div class="nav-links">
+      <a class="active" onclick="showPage('dashboard')">📊 Dashboard</a>
+      <a onclick="showPage('disease')">📷 Disease Detection</a>
+      <a onclick="showPage('irrigation')">💧 Smart Irrigation</a>
+      <a onclick="showPage('settings')">⚙️ Settings</a>
+    </div>
+  </div>
+  <div style="padding:12px 16px"><span class="badge">LIVE FARM MONITORING</span><span style="float:right;font-size:12px">Logged in as Farmer</span></div>
+  <div class="card">
+    <h1>Good Morning,<br>Farmer!</h1>
+    <p style="color:#666;margin:8px 0">Your crops are being monitored 24/7. Here's today's overview.</p>
+    <div class="grid2">
+      <div class="sensor"><b>1 Zone Active</b><br><span style="font-size:11px;color:#666">LIVE DATA - Connected field data is updating in real time</span></div>
+      <div class="sensor"><b id="moist">42%</b><br><span>Soil Moisture</span></div>
+      <div class="sensor"><b id="temp">27°C</b><br><span>Temperature</span></div>
+      <div class="sensor"><b style="color:var(--green)">Healthy</b><br><span>Crop Status</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PAGE 4: DISEASE DETECTION -->
+<div id="disease" class="page">
+  <div class="navbar"><div class="nav-links"><a onclick="showPage('dashboard')">📊 Dashboard</a><a class="active">📷 Disease Detection</a><a onclick="showPage('irrigation')">💧 Smart Irrigation</a><a onclick="showPage('settings')">⚙️ Settings</a></div></div>
+  <div class="card">
+    <h3>Upload a Crop / Leaf Photo</h3>
+    <p style="font-size:11px;color:#777">Connect a real model via detectDisease() in api.js</p>
+    <div class="drop" onclick="document.getElementById('fileInput').click()">
+      📷<br><b>Drag & drop an image here, or click to browse</b><br><span style="font-size:11px">JPEG, PNG or WEBP</span>
+      <input type="file" id="fileInput" hidden accept="image/*"><img id="preview" style="max-width:100%;margin-top:10px;display:none;border-radius:10px">
+    </div>
+    <button class="btn btn-green" id="analyzeBtn" style="width:100%;margin-top:12px" disabled>✦ Analyze Image</button>
+    <div id="result" style="margin-top:12px;background:#f9fbe7;padding:12px;border-radius:10px">🌿 Upload a leaf photo to see diagnosis</div>
+  </div>
+</div>
+
+<!-- PAGE 5: IRRIGATION -->
+<div id="irrigation" class="page">
+  <div class="navbar"><div class="nav-links"><a onclick="showPage('dashboard')">📊 Dashboard</a><a onclick="showPage('disease')">📷 Disease</a><a class="active">💧 Smart Irrigation</a><a onclick="showPage('settings')">⚙️ Settings</a></div></div>
+  <div class="card">
+    <h3>💧 Irrigation Status</h3>
+    <div class="grid2" style="margin-top:10px"><div class="sensor"><b id="moist2">42%</b><br><span>Soil Moisture</span></div><div class="sensor"><b>27°C</b><br><span>Soil Temp</span></div></div>
+    <div style="display:flex;justify-content:space-between;margin-top:14px"><span><b>Water Pump</b><br><span id="pumpSt" style="font-size:12px;color:green">● OFF</span></span><div class="switch" id="pumpSw" onclick="togglePump()"><div class="knob"></div></div></div>
+    <button class="btn btn-green" style="width:100%;background:#0288d1;margin-top:12px" onclick="togglePump(true)">💧 Irrigate Now</button>
+  </div>
+</div>
+
+<!-- PAGE 6: SETTINGS - Your other screenshots -->
+<div id="settings" class="page">
+  <div class="navbar"><div class="nav-links"><a onclick="showPage('dashboard')">📊 Dashboard</a><a onclick="showPage('settings')" class="active">⚙️ Settings</a></div></div>
+  <div class="card"><h3>👤 Profile</h3><label>Farmer Name</label><input class="input" value="Ramesh Patil"><label style="margin-top:8px;display:block">Farm Location</label><input class="input" value="Phaltan, Maharashtra"></div>
+  <div class="card"><h3>⚙️ Preferences</h3><div style="display:flex;justify-content:space-between;margin-top:10px"><span>Dark Mode</span><div class="switch" onclick="this.classList.toggle('on')"><div class="knob"></div></div></div></div>
+  <button class="btn btn-green" style="margin:12px;width:calc(100% - 24px)" onclick="alert('Saved!')">💾 Save Changes</button>
+  <button class="btn" style="margin:0 12px;width:calc(100% - 24px);background:#fff3e0;color:#e65100" onclick="showPage('landing')">🚪 Log out</button>
+</div>
+
+<script>
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+// Disease
+let file=null;const fi=document.getElementById('fileInput');if(fi){fi.onchange=e=>{file=e.target.files[0];let pre=document.getElementById('preview');pre.src=URL.createObjectURL(file);pre.style.display='block';document.getElementById('analyzeBtn').disabled=false;};}
+document.getElementById('analyzeBtn').onclick=async function(){this.textContent='Analyzing...';await new Promise(r=>setTimeout(r,1500));document.getElementById('result').innerHTML='<div style="border-left:4px solid #4caf50;background:#e8f5e9;padding:10px;border-radius:8px"><b>Healthy Leaf - 98.1%</b><br>Recommendation: Crop is healthy!</div>';this.textContent='✦ Analyze Image';};
+// Live data
+setInterval(()=>{let m=Math.round(35+Math.random()*20);let el=document.getElementById('moist');if(el)el.textContent=m+'%';let el2=document.getElementById('moist2');if(el2)el2.textContent=m+'%';},2000);
+function togglePump(force){let sw=document.getElementById('pumpSw');let st=document.getElementById('pumpSt');let on=force!==undefined?force:!sw.classList.contains('on');sw.classList.toggle('on',on);st.innerHTML=on?'● ON - Irrigating...':'● OFF';st.style.color=on?'#0288d1':'green';}
+</script>
+</body>
+</html>
