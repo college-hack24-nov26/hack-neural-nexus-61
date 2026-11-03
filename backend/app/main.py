@@ -14,7 +14,7 @@ from app.api.history import router as history_router
 app = FastAPI(
     title="CropNex AI Backend",
     version="1.0.0",
-    docs_url=None,
+    docs_url=None, 
     redoc_url=None
 )
 
