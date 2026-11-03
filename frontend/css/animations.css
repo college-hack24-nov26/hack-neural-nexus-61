@@ -1,0 +1,369 @@
+/* =========================================================
+   animations.css
+   Motion layer for Smart Agriculture — layered on top of
+   style.css / responsive.css. Nothing here changes colors,
+   spacing or layout; it only adds transitions & keyframes.
+   ========================================================= */
+
+@media (prefers-reduced-motion: no-preference) {
+
+  /* ---------- Page load ---------- */
+  .content { animation: pageFadeIn 0.5s ease both; }
+  @keyframes pageFadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .sidebar { animation: slideInLeft 0.45s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes slideInLeft {
+    from { opacity: 0; transform: translateX(-16px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
+  .topbar { animation: fadeDown 0.45s ease both; }
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ---------- Staggered card / grid reveal ---------- */
+  .grid > *,
+  #alertsCard,
+  .chart-card,
+  .card {
+    opacity: 0;
+    animation: cardRise 0.55s cubic-bezier(.2,.7,.3,1) forwards;
+    animation-play-state: paused;
+  }
+  .anim-ready .grid > *,
+  .anim-ready #alertsCard,
+  .anim-ready .chart-card,
+  .anim-ready .card {
+    animation-play-state: running;
+  }
+  @keyframes cardRise {
+    from { opacity: 0; transform: translateY(14px) scale(0.985); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  /* stagger via nth-child, capped so long lists don't lag */
+  .grid > *:nth-child(1) { animation-delay: 0.02s; }
+  .grid > *:nth-child(2) { animation-delay: 0.08s; }
+  .grid > *:nth-child(3) { animation-delay: 0.14s; }
+  .grid > *:nth-child(4) { animation-delay: 0.20s; }
+  .grid > *:nth-child(5) { animation-delay: 0.26s; }
+  .grid > *:nth-child(6) { animation-delay: 0.32s; }
+  .section-heading ~ .card,
+  #alertsCard { animation-delay: 0.30s; }
+  .chart-card { animation-delay: 0.18s; }
+
+  /* ---------- Card hover lift ---------- */
+  .card {
+    transition: transform 0.22s cubic-bezier(.2,.7,.3,1),
+                box-shadow 0.22s ease,
+                border-color 0.22s ease;
+    will-change: transform;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 26px rgba(34,48,31,0.14), 0 2px 6px rgba(34,48,31,0.08);
+    border-color: var(--color-primary-light);
+  }
+
+  /* ---------- Metric numbers ---------- */
+  .metric-value {
+    display: inline-flex;
+    align-items: baseline;
+    transition: color 0.3s ease;
+  }
+  .metric-icon {
+    display: inline-block;
+    transition: transform 0.25s ease;
+  }
+  .card:hover .metric-icon {
+    transform: scale(1.18) rotate(-6deg);
+  }
+
+  /* ---------- Live status dot pulse ---------- */
+  .field-chip .dot {
+    animation: pulseDot 1.8s ease-in-out infinite;
+  }
+  @keyframes pulseDot {
+    0%, 100% { box-shadow: 0 0 0 3px var(--color-good-bg); }
+    50%      { box-shadow: 0 0 0 6px var(--color-good-bg); }
+  }
+  .field-chip.offline .dot { animation: none; }
+
+  .demo-banner .badge {
+    position: relative;
+    overflow: hidden;
+  }
+  .demo-banner.visible .badge::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.55), transparent);
+    transform: translateX(-120%);
+    animation: badgeSheen 3.2s ease-in-out infinite;
+  }
+  @keyframes badgeSheen {
+    0%   { transform: translateX(-120%); }
+    35%  { transform: translateX(140%); }
+    100% { transform: translateX(140%); }
+  }
+
+  .badge-dot { animation: notifPulse 1.6s ease-in-out infinite; }
+  @keyframes notifPulse {
+    0%, 100% { transform: scale(1); }
+    50%      { transform: scale(1.35); }
+  }
+
+  /* ---------- Buttons ---------- */
+  .btn {
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.15s ease, box-shadow 0.2s ease, filter 0.2s ease;
+  }
+  .btn:hover { transform: translateY(-2px); filter: brightness(1.04); }
+  .btn:active { transform: translateY(0) scale(0.98); }
+  .btn-primary:hover { box-shadow: 0 8px 18px rgba(47,82,51,0.28); }
+  .btn::after {
+    content: "";
+    position: absolute;
+    top: var(--ry, 50%); left: var(--rx, 50%);
+    width: 6px; height: 6px;
+    background: rgba(255,255,255,0.55);
+    border-radius: 50%;
+    opacity: 0;
+    transform: translate(-50%,-50%) scale(1);
+    pointer-events: none;
+  }
+  .btn.rippling::after {
+    animation: btnRipple 0.55s ease-out;
+  }
+  @keyframes btnRipple {
+    from { opacity: 0.55; transform: translate(-50%,-50%) scale(1); }
+    to   { opacity: 0; transform: translate(-50%,-50%) scale(28); }
+  }
+
+  .icon-btn, .profile-btn {
+    transition: transform 0.18s ease, background 0.18s ease;
+  }
+  .icon-btn:hover { transform: translateY(-2px) scale(1.05); }
+  .profile-btn:hover { transform: translateY(-1px); }
+  .icon-btn:active { transform: scale(0.92); }
+
+  /* ---------- Nav links ---------- */
+  .nav-list a {
+    position: relative;
+  }
+  .nav-list a .nav-icon { transition: transform 0.2s ease; display: inline-block; }
+  .nav-list a:hover .nav-icon { transform: translateX(2px) scale(1.1); }
+  .nav-list a.active .nav-icon { animation: iconPop 0.4s ease; }
+  @keyframes iconPop {
+    0%   { transform: scale(0.6); }
+    60%  { transform: scale(1.25); }
+    100% { transform: scale(1); }
+  }
+
+  /* ---------- Dropdown panels ---------- */
+  .dropdown-panel {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+    transform-origin: top right;
+    transition: opacity 0.16s ease, transform 0.16s ease;
+    pointer-events: none;
+  }
+  .dropdown-panel.open {
+    display: block;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+    animation: dropdownPop 0.2s cubic-bezier(.2,.8,.3,1);
+  }
+  @keyframes dropdownPop {
+    from { opacity: 0; transform: translateY(-6px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .dropdown-item { transition: padding-left 0.15s ease, background 0.15s ease; }
+  .dropdown-item:hover { padding-left: 20px; }
+
+  /* ---------- Bars / gauges / progress ---------- */
+  .bar-fill, .gauge-fill, .pred-bar-fill {
+    transition: width 0.9s cubic-bezier(.2,.8,.2,1);
+  }
+  .bar-fill { position: relative; overflow: hidden; }
+  .bar-fill::after {
+    content: "";
+    position: absolute; inset: 0;
+    background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+    transform: translateX(-100%);
+    animation: barSheen 2.4s ease-in-out infinite;
+  }
+
+  @keyframes barSheen {
+    0%   { transform: translateX(-100%); }
+    60%  { transform: translateX(100%); }
+    100% { transform: translateX(100%); }
+  }
+
+  .gauge-marker { transition: left 0.4s ease; }
+
+  /* ---------- Spinner ---------- */
+  .spinner {
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .state-box { animation: pageFadeIn 0.4s ease both; }
+  .state-icon { display: inline-block; animation: floatY 2.4s ease-in-out infinite; }
+  @keyframes floatY {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-6px); }
+  }
+
+  /* ---------- Pills ---------- */
+  .pill { transition: transform 0.15s ease; }
+  .card:hover .pill { transform: translateY(-1px); }
+
+  /* ---------- Dropzone (disease detection upload) ---------- */
+  .dropzone {
+    transition: border-color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  }
+  .dropzone:hover { transform: translateY(-2px); }
+  .dropzone.dragover { animation: dropzonePulse 0.9s ease-in-out infinite; }
+  @keyframes dropzonePulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(47,82,51,0.18); }
+    50%      { box-shadow: 0 0 0 8px rgba(47,82,51,0); }
+  }
+  .dz-icon { display: inline-block; transition: transform 0.25s ease; }
+  .dropzone:hover .dz-icon { transform: translateY(-4px) rotate(-4deg); }
+
+  .preview-wrap.visible img {
+    animation: cardRise 0.4s ease both;
+  }
+
+  .prediction-row {
+    opacity: 0;
+    animation: rowSlide 0.4s ease forwards;
+  }
+  .prediction-row:nth-child(1) { animation-delay: 0.05s; }
+  .prediction-row:nth-child(2) { animation-delay: 0.12s; }
+  .prediction-row:nth-child(3) { animation-delay: 0.19s; }
+  .prediction-row:nth-child(4) { animation-delay: 0.26s; }
+  .prediction-row:nth-child(5) { animation-delay: 0.33s; }
+  @keyframes rowSlide {
+    from { opacity: 0; transform: translateX(-8px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+  .prediction-row .pred-bar-fill {
+    width: 0 !important;
+    animation: none;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline-dot { transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease; }
+  .timeline-step.current .timeline-dot { animation: currentPulse 1.8s ease-in-out infinite; }
+  @keyframes currentPulse {
+    0%, 100% { box-shadow: 0 0 0 4px var(--color-warn-bg); }
+    50%      { box-shadow: 0 0 0 8px var(--color-warn-bg); }
+  }
+  .timeline-step:hover .timeline-dot { transform: scale(1.2); }
+
+  /* ---------- Weather + overview values ---------- */
+  .weather-value { transition: transform 0.2s ease; }
+  .weather-item:hover .weather-value { transform: scale(1.08); }
+
+  /* ---------- Toggle switches / inputs (settings) ---------- */
+  input[type="checkbox"] { transition: transform 0.15s ease; }
+  input[type="checkbox"]:active { transform: scale(0.9); }
+
+  select, input[type="text"], input[type="email"], input[type="password"],
+  input[type="search"], input[type="date"], input[type="number"], textarea {
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  select:focus, input:focus, textarea:focus {
+    border-color: var(--color-primary-light) !important;
+    box-shadow: 0 0 0 3px var(--color-good-bg);
+    outline: none;
+  }
+
+  /* ---------- Login page brand ---------- */
+  .brand .leaf, .topbar-logo .leaf, .brand-mark .leaf {
+    display: inline-block;
+    animation: leafSway 3.6s ease-in-out infinite;
+    transform-origin: bottom center;
+  }
+  @keyframes leafSway {
+    0%, 100% { transform: rotate(0deg); }
+    25%      { transform: rotate(-8deg); }
+    75%      { transform: rotate(8deg); }
+  }
+
+  .login-wrap { animation: pageFadeIn 0.4s ease both; }
+  .login-card {
+    animation: cardRise 0.55s cubic-bezier(.2,.7,.3,1) both;
+  }
+  .login-card .brand-mark .leaf {
+    animation: leafSway 3.6s ease-in-out infinite, leafDrop 0.6s cubic-bezier(.2,.8,.3,1) both;
+  }
+  @keyframes leafDrop {
+    from { opacity: 0; transform: translateY(-16px) scale(0.7); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+  .demo-creds {
+    opacity: 0;
+    animation: pageFadeIn 0.4s ease forwards;
+    animation-delay: 0.35s;
+  }
+
+  /* ---------- Header search focus grow ---------- */
+  .header-search { transition: box-shadow 0.2s ease, background 0.2s ease; }
+  .header-search:focus-within {
+    box-shadow: 0 0 0 3px var(--color-good-bg);
+    background: var(--color-surface);
+  }
+
+  /* ---------- Number count-up helper class ---------- */
+  .count-up { transition: none; }
+
+  /* ---------- Section headings ---------- */
+  .section-heading {
+    opacity: 0;
+    animation: fadeDown 0.5s ease forwards;
+    animation-delay: 0.15s;
+  }
+
+  /* ---------- Ambient floating leaves (dashboard hero only) ---------- */
+  .leaf-ambient {
+    position: fixed;
+    top: -40px;
+    font-size: 1.4rem;
+    opacity: 0.16;
+    pointer-events: none;
+    z-index: 1;
+    animation: leafFall linear infinite;
+    user-select: none;
+  }
+  @keyframes leafFall {
+    0%   { transform: translateY(-5vh) translateX(0) rotate(0deg); }
+    50%  { transform: translateY(50vh) translateX(24px) rotate(180deg); }
+    100% { transform: translateY(105vh) translateX(-12px) rotate(360deg); }
+  }
+
+  /* ---------- Modal ---------- */
+  .modal-box {
+    animation: modalPop 0.25s cubic-bezier(.2,.8,.3,1) both;
+  }
+  @keyframes modalPop {
+    from { opacity: 0; transform: translateY(10px) scale(0.97); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+}
+
+/* Respect users who prefer reduced motion: keep everything static & instant */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

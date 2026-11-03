@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dashboard - Smart Agriculture</title>
+<style>
+:root{--green:#2e7d32;--light:#e8f5e9;--bg:#f5f7f2;--card:#fff;--border:#e6ece3}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:#1e2e1e}
+.navbar{background:var(--card);padding:12px 16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border);position:sticky;top:0;z-index:10}
+.logo b{color:var(--green)}
+.nav-links{width:100%;margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.nav-links a{text-decoration:none;color:#2c3e2c;background:var(--light);padding:6px 12px;border-radius:20px;font-size:13px}
+.nav-links a:first-child{background:var(--green);color:white}
+.top{padding:14px 16px;display:flex;justify-content:space-between;align-items:center}
+.badge-live{background:#e8f5e9;color:var(--green);padding:6px 12px;border-radius:20px;font-size:12px;font-weight:600}
+.card{background:var(--card);margin:0 12px 14px 12px;border-radius:18px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.hero h1{font-size:28px;line-height:1.1}
+.hero p{color:#666;margin:10px 0 16px 0;font-size:14px}
+.stats{display:flex;gap:10px;margin-top:12px}
+.stat{flex:1;background:#f1f8e9;border-radius:14px;padding:14px;text-align:center}
+.stat b{font-size:20px;display:block}
+.stat span{font-size:11px;color:#666}
+.stat.active{border:2px solid var(--green)}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.sensor{border:1px solid var(--border);border-radius:14px;padding:12px}
+.sensor b{font-size:18px}
+.sensor span{font-size:11px;color:#888;display:block}
+.sensor .icon{font-size:20px}
+.btn{width:100%;background:var(--green);color:white;border:none;padding:12px;border-radius:12px;font-weight:600;margin-top:10px}
+.dot{width:8px;height:8px;background:#4caf50;border-radius:50%;display:inline-block;animation:blink 1s infinite}
+@keyframes blink{0%,100%{opacity:1} 50%{opacity:0.3}}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">🌱 <b>Smart Agriculture</b> Farm Monitor</div>
+  <div class="nav-links">
+    <a>📊 Dashboard</a>
+    <a>📷 Disease Detection</a>
+    <a>💧 Smart Irrigation</a>
+    <a>🍅 Crop Health</a>
+    <a>📈 Analytics</a>
+  </div>
+</div>
+
+<div class="top">
+  <span style="font-size:13px">Logged in as <b>Farmer</b> • 🔔 No new notifications</span>
+  <span class="badge-live"><span class="dot"></span> LIVE FARM MONITORING</span>
+</div>
+
+<div class="card hero">
+  <h1>Good Morning,<br>Farmer!</h1>
+  <p>Your crops are being monitored 24/7. Here's today's overview.</p>
+  
+  <div class="stats">
+    <div class="stat active">
+      <b>1 Zone</b>
+      <span>Active</span>
+    </div>
+    <div class="stat">
+      <b><span class="dot"></span> LIVE DATA</b>
+      <span>Connected field data is updating in real time</span>
+    </div>
+  </div>
+
+  <div class="grid" id="fieldData">
+    <div class="sensor"><div class="icon">💧</div><b id="moist">42%</b><span>Soil Moisture</span></div>
+    <div class="sensor"><div class="icon">🌡️</div><b id="temp">27°C</b><span>Temperature</span></div>
+    <div class="sensor"><div class="icon">☀️</div><b id="light">68%</b><span>Sunlight</span></div>
+    <div class="sensor"><div class="icon">🌿</div><b style="color:var(--green)">Healthy</b><span>Crop Status</span></div>
+  </div>
+
+  <button class="btn" onclick="location.reload()">🔄 Refresh Field Data</button>
+  <p style="text-align:center;font-size:11px;color:#aaa;margin-top:8px">Smart Agriculture • FIELD_001 • Tomato Crop</p>
+</div>
+
+<script>
+// Simulate live field data - replace with real API later
+let m=42, t=27, l=68;
+setInterval(()=>{
+  m=Math.max(20,Math.min(80,m+(Math.random()-0.5)));
+  t=Math.max(22,Math.min(35,t+(Math.random()-0.5)*0.5));
+  l=Math.max(40,Math.min(95,l+(Math.random()-0.5)));
+  document.getElementById('moist').textContent=Math.round(m)+'%';
+  document.getElementById('temp').textContent=Math.round(t)+'°C';
+  document.getElementById('light').textContent=Math.round(l)+'%';
+},2000);
+
+// For REAL ESP32 / Firebase:
+// async function loadFieldData(){
+//   const res = await fetch('http://YOUR_ESP_IP/data');
+//   const data = await res.json();
+//   document.getElementById('moist').textContent=data.moisture+'%';
+// }
+</script>
+</body>
+</html>

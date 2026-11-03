@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Settings - Smart Agriculture</title>
+<style>
+:root{--green:#2e7d32;--bg:#f5f7f2;--card:#fff;--border:#e6ece3}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:var(--bg);color:#1e2e1e}
+.navbar{background:var(--card);padding:12px 16px;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;border-bottom:1px solid var(--border)}
+.logo b{color:var(--green)}
+.nav-links{width:100%;margin-top:10px;display:flex;flex-wrap:wrap;gap:8px}
+.nav-links a{text-decoration:none;color:#2c3e2c;background:#e8f5e9;padding:6px 12px;border-radius:20px;font-size:13px}
+.card{background:var(--card);margin:12px;border-radius:18px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+.card h2{font-size:18px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.label{font-size:13px;color:#555;margin:10px 0 4px 0;display:block}
+.input, .select{width:100%;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:#fbfcfb;font-size:14px}
+.row{display:flex;gap:12px}
+.row>div{flex:1}
+.toggle-row{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-bottom:1px solid #f2f2f2}
+.toggle-row:last-child{border:none}
+.switch{width:46px;height:26px;background:#ccc;border-radius:20px;position:relative;cursor:pointer;transition:.3s}
+.switch.on{background:var(--green)}
+.knob{width:20px;height:20px;background:white;border-radius:50%;position:absolute;top:3px;left:3px;transition:.3s}
+.switch.on .knob{left:23px}
+.btn{padding:12px 18px;border:none;border-radius:12px;font-weight:600;cursor:pointer}
+.btn-green{background:var(--green);color:white;width:100%;margin-top:12px}
+.btn-light{background:#f1f8e9;color:var(--green)}
+.btn-danger{background:#fff3e0;color:#e65100}
+.badge{display:inline-block;background:#e8f5e9;color:var(--green);padding:6px 10px;border-radius:20px;font-size:12px;margin-bottom:10px}
+</style>
+</head>
+<body>
+
+<div class="navbar">
+  <div class="logo">🌱 <b>Smart Agriculture</b> Farm Monitor</div>
+  <div class="nav-links">
+    <a>📊 Dashboard</a>
+    <a>📷 Disease Detection</a>
+    <a>💧 Smart Irrigation</a>
+    <a>🍅 Crop Health</a>
+    <a>📈 Analytics</a>
+  </div>
+</div>
+
+<div style="padding:14px 16px">
+  <div class="badge">👤 Logged in as Farmer • FIELD_001 • Tomato Crop</div>
+</div>
+
+<div class="card">
+  <h2>👤 Profile</h2>
+  <label class="label">Farmer Name</label>
+  <input class="input" id="farmerName" value="Ramesh Patil">
+  
+  <div class="row">
+    <div><label class="label">Mobile Number</label><input class="input" value="+91 98XXXX XXXXX"></div>
+    <div><label class="label">Email</label><input class="input" value="ramesh.farm@gmail.com"></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🚜 Farm Information</h2>
+  <label class="label">Farm Name</label>
+  <input class="input" value="Patil Farms">
+
+  <div class="row">
+    <div><label class="label">Location</label><input class="input" value="Phaltan, Maharashtra"></div>
+    <div><label class="label">Farm Size (acres)</label><input class="input" type="number" value="2.5"></div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label class="label">Soil Type</label>
+      <select class="select"><option>Loamy</option><option>Black</option><option>Sandy</option><option>Clay</option></select>
+    </div>
+    <div>
+      <label class="label">Main Crop</label>
+      <select class="select"><option>Tomato</option><option>Wheat</option><option>Cotton</option><option>Sugarcane</option></select>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>⚙️ Preferences</h2>
+  <div class="row">
+    <div>
+      <label class="label">Language</label>
+      <select class="select" id="lang"><option>English</option><option>मराठी</option><option>हिंदी</option></select>
+    </div>
+    <div>
+      <label class="label">Temperature Unit</label>
+      <select class="select"><option>Celsius (°C)</option><option>Fahrenheit (°F)</option></select>
+    </div>
+  </div>
+
+  <div class="toggle-row">
+    <div><b>Notifications</b><br><span style="font-size:12px;color:#777">Receive alerts for irrigation, disease, weather</span></div>
+    <div class="switch on" onclick="this.classList.toggle('on')"><div class="knob"></div></div>
+  </div>
+  <div class="toggle-row">
+    <div><b>Dark Mode</b><br><span style="font-size:12px;color:#777">Switch to a low-light color theme</span></div>
+    <div class="switch" id="darkSwitch" onclick="toggleDark()"><div class="knob"></div></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🔒 Security</h2>
+  <label class="label">Current Password</label><input class="input" type="password" placeholder="••••••••">
+  <div class="row">
+    <div><label class="label">New Password</label><input class="input" type="password" placeholder="New password"></div>
+    <div><label class="label">Confirm New Password</label><input class="input" type="password" placeholder="Confirm"></div>
+  </div>
+  <div style="display:flex;gap:10px;margin-top:14px">
+    <button class="btn btn-light" onclick="save()">Change Password</button>
+    <button class="btn btn-danger" onclick="logout()">🚪 Log out</button>
+  </div>
+</div>
+
+<button class="btn btn-green" style="margin:12px" onclick="save()">💾 Save Changes</button>
+<p style="text-align:center;color:#999;font-size:12px;margin:10px">Smart Agriculture v1.0</p>
+
+<script>
+function toggleDark(){
+  document.getElementById('darkSwitch').classList.toggle('on');
+  document.body.style.background = document.body.style.background==='rgb(18, 27, 18)' ? '#f5f7f2' : '#121b12';
+  document.body.style.color = document.body.style.color==='white' ? '#1e2e1e' : 'white';
+}
+function save(){
+  localStorage.setItem('farmerName', document.getElementById('farmerName').value);
+  alert('✅ Changes saved! Name: '+document.getElementById('farmerName').value);
+}
+function logout(){
+  if(confirm('Log out?')){ alert('Logged out'); location.href='#'; }
+}
+// Load saved
+let saved=localStorage.getItem('farmerName');
+if(saved) document.getElementById('farmerName').value=saved;
+</script>
+</body>
+</html>

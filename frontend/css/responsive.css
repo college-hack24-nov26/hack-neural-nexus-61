@@ -1,0 +1,208 @@
+@media (max-width: 1100px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    position: fixed;
+    left: 0; top: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.2s ease;
+    z-index: 100;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+  }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: inline-flex; }
+  .content { padding: 20px 16px 40px 16px; }
+  .topbar { padding: 14px 16px; }
+  .sidebar-overlay {
+    display: none;
+    position: fixed; inset: 0; background: rgba(0,0,0,0.35); z-index: 90;
+  }
+  .sidebar-overlay.visible { display: block; }
+}
+
+@media (max-width: 640px) {
+  .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+  .topbar .page-subtitle { display: none; }
+  .metric-value { font-size: 1.9rem; }
+  .field-chip span.field-crop { display: none; }
+  .login-card { padding: 28px 22px; }
+}
+
+/* =========================================================
+   Additions — header search/actions/weather/timeline responsive rules
+   ========================================================= */
+
+@media (max-width: 900px) {
+  .topbar-logo { display: flex; }
+  .header-search { display: none; }
+}
+
+@media (max-width: 640px) {
+  .header-actions { gap: 8px; }
+  .profile-name { display: none; }
+  .weather-grid { grid-template-columns: repeat(2, 1fr); }
+  .timeline { flex-wrap: wrap; row-gap: 18px; }
+  .timeline::before { display: none; }
+  .timeline-step { flex-basis: 33%; }
+  .dropdown-panel { position: fixed; top: 64px; right: 12px; left: 12px; min-width: 0; }
+  .page-heading-row { flex-direction: column; align-items: flex-start; }
+}
+
+@media (max-width: 420px) {
+  .weather-grid { grid-template-columns: 1fr 1fr; }
+}
+
+/* Keep the sidebar off-canvas until the mobile menu is opened. */
+@media (max-width: 900px) {
+  .sidebar {
+    animation-name: sidebar-mobile-enter;
+  }
+
+  @keyframes sidebar-mobile-enter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+}
+
+@media (max-width: 900px) {
+  .login-wrap {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    padding: 28px 18px 42px;
+  }
+  .login-visual { max-width: 620px; margin: 0 auto; text-align: center; }
+  .hero-copy { margin-left: auto; margin-right: auto; }
+  .hero-stats { justify-content: center; }
+  .hero-field-art { max-width: 560px; margin-left: auto; margin-right: auto; }
+  .login-card { width: 100%; max-width: 400px; margin: 0 auto; }
+  .irrigation-visual-card { grid-template-columns: 1fr; }
+  .irrigation-visual-copy { text-align: center; }
+  .irrigation-visual-copy p { margin-left: auto; margin-right: auto; }
+}
+
+@media (max-width: 640px) {
+  .login-visual h2 { font-size: 2.75rem; }
+  .hero-field-art { height: 150px; }
+  .hero-sensor { font-size: 0.58rem; }
+  .plant-one { left: 12%; } .plant-three { right: 10%; }
+  .hero-stats { gap: 20px; }
+  .scan-pipeline { gap: 5px; font-size: 0.61rem; }
+  .pipeline-step span { width: 19px; height: 19px; }
+  .irrigation-scene { height: 220px; }
+}
+
+
+
+/* =========================================================
+   Older-phone compatibility and low-power rendering
+   Targets slower Android devices, small screens, and data saver mode.
+   ========================================================= */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+button, a, input, select, textarea { touch-action: manipulation; }
+img, canvas, svg { max-width: 100%; }
+
+/* Keep the interface usable when the browser does not support blur or fixed backgrounds. */
+@media (max-width: 760px) {
+  .dashboard-page .main::before,
+  body.reference-page .main::before {
+    position: absolute;
+    background-attachment: scroll;
+  }
+  .dashboard-page .main::after,
+  body.reference-page .main::after {
+    display: none;
+    animation: none !important;
+  }
+  .hero-overview,
+  .quick-stat,
+  .meter-card,
+  .glass-card,
+  .dropdown-panel,
+  .app-sidebar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  .meter-card::before { display: none; }
+  .ring-progress, .mini-track i { filter: none; transition-duration: .2s; }
+  .dashboard-page .content,
+  body.reference-page .content { padding-left: 12px; padding-right: 12px; }
+  .reference-heading h1 { line-height: 1.08; }
+  .hero-copy h2 { letter-spacing: -.035em; }
+  .meter-body { gap: 8px; }
+}
+
+@media (max-width: 420px) {
+  .app-sidebar-brand strong { font-size: 1rem; }
+  .app-sidebar-nav a, .app-sidebar-settings { min-height: 40px; padding: 8px 10px; }
+  .app-sidebar-account { padding: 12px 10px; }
+  .dashboard-page .topbar,
+  body.reference-page .topbar.reference-topbar { padding-left: 10px; padding-right: 10px; }
+  .reference-heading h1 { font-size: 1.82rem; }
+  .reference-heading p { font-size: .78rem; }
+  .hero-overview { padding: 18px 14px; }
+  .hero-copy h2 { font-size: 1.72rem; }
+  .quick-stat { min-height: 62px; padding: 9px 8px; }
+  .quick-stat small { font-size: .62rem; }
+  .quick-stat strong { font-size: .88rem; }
+  .meter-card { padding: 14px 12px; }
+  .meter-ring { width: 104px; height: 104px; flex-basis: 104px; }
+  .meter-center strong { font-size: 1.18rem; }
+  .meter-label { font-size: .66rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: .01ms !important;
+  }
+}
+
+
+/* Automatically simplify effects on data-saver / low-power devices. */
+.low-power-device *,
+.low-power-device *::before,
+.low-power-device *::after {
+  animation-duration: .01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .01ms !important;
+}
+.low-power-device .dashboard-page .main::after,
+.low-power-device body.reference-page .main::after,
+.low-power-device .leaf-ambient,
+.low-power-device .scan-beam { display: none !important; }
+.low-power-device .hero-overview,
+.low-power-device .quick-stat,
+.low-power-device .meter-card,
+.low-power-device .glass-card,
+.low-power-device .topbar,
+.low-power-device .dropdown-panel {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+  box-shadow: 0 5px 14px rgba(0,0,0,.16) !important;
+}
+
+@media (max-width: 760px) {
+  .icon-btn, .profile-btn, .btn, select, input, textarea { min-height: 42px; }
+  input, select, textarea { font-size: 16px; }
+  .icon-btn { min-width: 42px; }
+  .profile-btn { min-width: 42px; }
+  .dropdown-panel { box-shadow: 0 8px 20px rgba(0,0,0,.24) !important; }
+}
+
+
+.chart-fallback-message {
+  margin: 16px 0;
+  color: #aac0c5;
+  font-size: .82rem;
+  line-height: 1.45;
+}

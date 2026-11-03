@@ -1,0 +1,53 @@
+<svg width="1440" height="900" viewBox="0 0 1440 900" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="sky" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f2810;stop-opacity:1" />
+      <stop offset="40%" style="stop-color:#1b4d1f;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#2e7d32;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="field" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2e7d32;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#81c784;stop-opacity:0.3" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1440" height="900" fill="url(#sky)"/>
+
+  <!-- Sun - Dawn -->
+  <circle cx="1200" cy="180" r="80" fill="#fff9c4" opacity="0.9">
+    <animate attributeName="opacity" values="0.7;1;0.7" dur="4s" repeatCount="indefinite"/>
+  </circle>
+  <circle cx="1200" cy="180" r="120" fill="#ffecb3" opacity="0.15"/>
+
+  <!-- Far Hills -->
+  <path d="M0 450 Q 360 350 720 420 T 1440 380 L 1440 900 L 0 900 Z" fill="#1b5e20" opacity="0.6"/>
+  <path d="M0 480 Q 500 400 900 450 T 1440 420 L 1440 900 L 0 900 Z" fill="#2e7d32" opacity="0.5"/>
+
+  <!-- Farm Fields Pattern -->
+  <g opacity="0.25" stroke="#a5d6a7" stroke-width="1">
+    <path d="M0 600 L 1440 550"/>
+    <path d="M0 650 L 1440 600"/>
+    <path d="M0 700 L 1440 650"/>
+    <path d="M0 750 L 1440 700"/>
+    <path d="M0 800 L 1440 750"/>
+  </g>
+
+  <!-- Crops Icons - Simplified -->
+  <g opacity="0.4">
+    <!-- Wheat/Corn rows -->
+    <path d="M200 700 Q 210 680 200 660 Q 190 680 200 700" fill="#aed581"/>
+    <path d="M240 710 Q 250 690 240 670 Q 230 690 240 710" fill="#aed581"/>
+    <path d="M1000 680 Q 1010 660 1000 640 Q 990 660 1000 680" fill="#aed581"/>
+    <path d="M1040 690 Q 1050 670 1040 650 Q 1030 670 1040 690" fill="#aed581"/>
+  </g>
+
+  <!-- Floating Particles -->
+  <circle cx="300" cy="200" r="2" fill="#c8e6c9" opacity="0.6"/>
+  <circle cx="500" cy="150" r="1.5" fill="#c8e6c9" opacity="0.5"/>
+  <circle cx="800" cy="220" r="2" fill="#c8e6c9" opacity="0.6"/>
+  <circle cx="100" cy="300" r="1" fill="#c8e6c9" opacity="0.4"/>
+
+  <!-- Bottom Gradient Overlay for readability -->
+  <rect y="600" width="1440" height="300" fill="url(#field)"/>
+</svg>
